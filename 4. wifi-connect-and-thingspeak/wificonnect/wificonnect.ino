@@ -16,9 +16,6 @@ String urlWriteChannelFeed = "https://api.thingspeak.com/update?api_key=9P1OHJPZ
 String results = "2";
 String urlReadChannelField = "https://api.thingspeak.com/channels/1680534/fields/1.json?api_key="+READ_API_KEY+"&results=" + results;
 
-int sin_cnt = 0;
-
-
 void scan_wifi_networks(){
   Serial.println("Scanning available networks...");
   int numSsid = WiFi.scanNetworks();
@@ -76,11 +73,7 @@ void GET_REQUEST(String url){
 void loop() {
 
   if (WiFi.status() == WL_CONNECTED) {
-      int tot_points = 8;
-      float sin_value = sin(2*PI*sin_cnt/tot_points);
-      sin_cnt = (sin_cnt + 1)% tot_points;
-      GET_REQUEST(urlWriteChannelFeed+String(sin_value));
-
+      GET_REQUEST(urlWriteChannelFeed+String(float(random(24*100,26*100))/100.0));
   }
   delay(15000);
 
