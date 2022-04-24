@@ -20,6 +20,26 @@ void scan_wifi_networks(){
   }
 }
 
+void connect_to_wifi(String WifiSsid, String WifiPass){
+
+// Begin WiFi
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+// Connecting to WiFi...
+  Serial.print("Connecting to " + String(WIFI_SSID) + "\n");
+
+// Loop continuously while WiFi is not connected
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(5000);
+    Serial.print(".");
+  }
+  // Connected to WiFi
+  Serial.println();
+  Serial.print("Connected! IP address: ");
+  Serial.print(WiFi.localIP());
+  Serial.println();
+}
+
 
 void setup() {
 // Setup serial port
@@ -27,30 +47,13 @@ void setup() {
 
   scan_wifi_networks();
 
-// Begin WiFi
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
-//
-// Connecting to WiFi...
-  Serial.print("Connecting to " + String(WIFI_SSID) + "\n");
-
-  // Loop continuously while WiFi is not connected
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(100);
-    Serial.print(".");
-  }
-
-  // Connected to WiFi
-  Serial.println();
-  Serial.print("Connected! IP address: ");
-  Serial.print(WiFi.localIP());
-  Serial.println();
+// Uncomment this line once you know you've checked that WIFI_SSID appears on the look up
+//  connect_to_wifi(WIFI_SSID, WIFI_PASS);
 
 }
 
 void loop() {
 }
-
 ```
 
 Once you've run it you can change the following section of the code
