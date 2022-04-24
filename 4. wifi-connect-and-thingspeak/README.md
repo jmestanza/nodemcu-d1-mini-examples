@@ -65,4 +65,8 @@ Why 15 seconds? Because that's the minimum interval in which a request can be ma
 
 If all the steps went well you should see in your channel that your Field 1 Chart is being updated🥳🎉.
 
+<p align="center">
+  <img src="https://puu.sh/IWDE0/4d84d59997.png" />
+</p>
+
 Also, if you go to the Serial Monitor you would be able to see the last entry on that channel.
