@@ -58,7 +58,7 @@ void loop() {
 
 Once you've run it you can change the following section of the code
 
-```arduino
+```c
 #define WIFI_SSID "NAME_OF_WIFI_NETWORK"
 #define WIFI_PASS "PASSWORD_OF_WIFI_NETWORK"
 ```
