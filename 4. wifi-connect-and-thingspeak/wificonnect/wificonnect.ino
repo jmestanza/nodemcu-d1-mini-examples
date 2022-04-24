@@ -16,8 +16,8 @@ String urlWriteChannelFeed = "https://api.thingspeak.com/update?api_key=9P1OHJPZ
 String results = "2";
 String urlReadChannelField = "https://api.thingspeak.com/channels/1680534/fields/1.json?api_key="+READ_API_KEY+"&results=" + results;
 
-// sin count;
-int sin_count = 0;
+int sin_cnt = 0;
+
 
 void scan_wifi_networks(){
   Serial.println("Scanning available networks...");
@@ -27,32 +27,33 @@ void scan_wifi_networks(){
   }
 }
 
-
-void setup() {
-// Setup serial port
-  Serial.begin(115200);
-  
-//  scan_wifi_networks();
+void connect_to_wifi(String WifiSsid, String WifiPass){
 
 // Begin WiFi
   WiFi.begin(WIFI_SSID, WIFI_PASS);
-//
 // Connecting to WiFi...
   Serial.print("Connecting to " + String(WIFI_SSID) + "\n");
 
-  // Loop continuously while WiFi is not connected
+// Loop continuously while WiFi is not connected
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(100);
     Serial.print(".");
   }
-
   // Connected to WiFi
   Serial.println();
   Serial.print("Connected! IP address: ");
   Serial.print(WiFi.localIP());
   Serial.println();
+}
 
+void setup() {
+// Setup serial port
+  Serial.begin(115200);
+
+  scan_wifi_networks();
+
+  connect_to_wifi(WIFI_SSID, WIFI_PASS);
 }
 
 void GET_REQUEST(String url){
@@ -75,27 +76,9 @@ void GET_REQUEST(String url){
 void loop() {
 
   if (WiFi.status() == WL_CONNECTED) {
-
-//    GET_REQUEST(urlReadChannelField);
-      // thingSpeak period in seconds
-      int thingSpeakUpdateTime = 15; 
-      // points we want to see
-      int points = 8;
-      int T = thingSpeakUpdateTime*points;
-      float fo = 1/float(T);
-      float wo = 2*PI*fo;
-      Serial.printf("wo");
-      Serial.println(wo);
-      Serial.println();
-      float sin_value = sin(wo*sin_count*15);
-      Serial.printf("Sin Value");
-      Serial.println(sin_value);
-      Serial.println();
-      if(sin_count == points - 1){
-        sin_count = 0;
-      } else {
-        sin_count++;
-      }
+      int tot_points = 8;
+      float sin_value = sin(2*PI*sin_cnt/tot_points);
+      sin_cnt = (sin_cnt + 1)% tot_points;
       GET_REQUEST(urlWriteChannelFeed+String(sin_value));
 
   }
