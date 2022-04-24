@@ -28,6 +28,8 @@ In this case we've set the code to write some value on the first field (field1).
 
 `WRITE API_KEY`, `READ_API_KEY` and the urls used in the example are obtained in the `API Keys` tab of Thingspeak.
 
+API_KEYs are needed in the url because by default the channels are private.
+
 ```c
 void GET_REQUEST(String url){
     WiFiClientSecure client;
